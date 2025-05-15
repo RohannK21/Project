@@ -7,13 +7,12 @@ morse_code_dict = {
     '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....', '6': '-....', '7': '--...', 
     '8': '---..', '9': '----.', ' ': '/'
 }
-
-#GPIO pins
+#GPIO_pins
 LED_PIN = 18
 BUZZER_PIN = 23
 BUTTON_PIN = 17
 
-# ENGin MORSEout
+#ENG_in_MORSE_out
 def text_to_morse(text):
     morse_code = ''
     for char in text.upper():
@@ -21,7 +20,7 @@ def text_to_morse(text):
             morse_code += morse_code_dict[char] + ' '
     return morse_code.strip()
 
-# Function to blink LED according to Morse code
+#Morse_LED_blink
 def blink_morse_code(morse_code):
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(LED_PIN, GPIO.OUT)
@@ -29,24 +28,24 @@ def blink_morse_code(morse_code):
     for symbol in morse_code:
         if symbol == '.':
             GPIO.output(LED_PIN, GPIO.HIGH)
-            GPIO.output(BUZZER_PIN, GPIO.HIGH)  # Buzzer ON for dot
-            time.sleep(0.2)  # Dot duration
+            GPIO.output(BUZZER_PIN, GPIO.HIGH)  #ON for dot
+            time.sleep(0.2)  #duration
             GPIO.output(LED_PIN, GPIO.LOW)
-            GPIO.output(BUZZER_PIN, GPIO.LOW)  # Buzzer OFF
+            GPIO.output(BUZZER_PIN, GPIO.LOW)  #OFF
             time.sleep(0.2)  # Inter-element gap
         elif symbol == '-':
             GPIO.output(LED_PIN, GPIO.HIGH)
-            GPIO.output(BUZZER_PIN, GPIO.HIGH)  # Buzzer ON for dash
-            time.sleep(0.6)  # Dash duration
+            GPIO.output(BUZZER_PIN, GPIO.HIGH)  #ON for dash
+            time.sleep(0.6)  #duration
             GPIO.output(LED_PIN, GPIO.LOW)
-            GPIO.output(BUZZER_PIN, GPIO.LOW)  # Buzzer OFF
-            time.sleep(0.2)  # Inter-element gap
+            GPIO.output(BUZZER_PIN, GPIO.LOW)  #OFF
+            time.sleep(0.2)  #Inter-element gap
         elif symbol == '/':
-            time.sleep(0.4)  # Inter-character gap
+            time.sleep(0.4)  #Inter-character gap
 
     GPIO.cleanup()
 
-# MORSEin
+# MORSE_in
 def read_morse_input():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
